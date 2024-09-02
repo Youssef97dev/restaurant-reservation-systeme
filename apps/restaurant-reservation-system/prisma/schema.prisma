@@ -1,0 +1,73 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt    DateTime      @default(now())
+  email        String?       @unique
+  firstName    String?
+  id           String        @id @default(cuid())
+  lastName     String?
+  password     String
+  reservations Reservation[]
+  roles        Json
+  updatedAt    DateTime      @updatedAt
+  username     String        @unique
+}
+
+model Customer {
+  createdAt    DateTime      @default(now())
+  email        String
+  firstName    String
+  id           String        @id @default(cuid())
+  lastName     String
+  note         String?
+  phoneNumber  String
+  reservations Reservation[]
+  updatedAt    DateTime      @updatedAt
+}
+
+model Table {
+  capacity     Int
+  createdAt    DateTime        @default(now())
+  id           String          @id @default(cuid())
+  reservations Reservation[]
+  status       EnumTableStatus
+  tableNumber  Int             @unique
+  updatedAt    DateTime        @updatedAt
+}
+
+model Reservation {
+  cover           Int
+  createdAt       DateTime              @default(now())
+  customer        Customer?             @relation(fields: [customerId], references: [id])
+  customerId      String?
+  id              String                @id @default(cuid())
+  note            String?
+  reservationDate DateTime
+  reservationTime String
+  status          EnumReservationStatus
+  table           Table?                @relation(fields: [tableId], references: [id])
+  tableId         String?
+  updatedAt       DateTime              @updatedAt
+  user            User?                 @relation(fields: [userId], references: [id])
+  userId          String?
+}
+
+enum EnumTableStatus {
+  Available
+  Reserved
+  Occupied
+}
+
+enum EnumReservationStatus {
+  Confirmed
+  Booked
+  Cancelled
+  Pending
+}
