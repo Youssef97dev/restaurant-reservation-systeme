@@ -115,11 +115,11 @@ export class TableControllerBase {
         updatedAt: true,
       },
     });
-    if (result === null) {
+    /*if (result === null) {
       throw new errors.NotFoundException(
         `No resource was found for ${JSON.stringify(params)}`
       );
-    }
+    }*/
     return result;
   }
 
@@ -153,11 +153,11 @@ export class TableControllerBase {
         },
       });
     } catch (error) {
-      if (isRecordNotFoundError(error)) {
+      /*if (isRecordNotFoundError(error)) {
         throw new errors.NotFoundException(
           `No resource was found for ${JSON.stringify(params)}`
         );
-      }
+      }*/
       throw error;
     }
   }
@@ -189,11 +189,11 @@ export class TableControllerBase {
         },
       });
     } catch (error) {
-      if (isRecordNotFoundError(error)) {
+      /*if (isRecordNotFoundError(error)) {
         throw new errors.NotFoundException(
           `No resource was found for ${JSON.stringify(params)}`
         );
-      }
+      }*/
       throw error;
     }
   }
@@ -244,11 +244,11 @@ export class TableControllerBase {
         },
       },
     });
-    if (results === null) {
+    /*if (results === null) {
       throw new errors.NotFoundException(
         `No resource was found for ${JSON.stringify(params)}`
       );
-    }
+    }*/
     return results;
   }
 

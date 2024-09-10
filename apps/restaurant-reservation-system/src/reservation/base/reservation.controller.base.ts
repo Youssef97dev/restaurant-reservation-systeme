@@ -126,6 +126,8 @@ export class ReservationControllerBase {
         customer: {
           select: {
             id: true,
+            firstName: true,
+            lastName: true,
           },
         },
 
@@ -138,6 +140,7 @@ export class ReservationControllerBase {
         table: {
           select: {
             id: true,
+            tableNumber: true,
           },
         },
 
@@ -146,6 +149,8 @@ export class ReservationControllerBase {
         user: {
           select: {
             id: true,
+            firstName: true,
+            lastName: true,
           },
         },
       },

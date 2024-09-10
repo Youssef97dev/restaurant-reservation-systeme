@@ -7,4 +7,18 @@ export class TableService extends TableServiceBase {
   constructor(protected readonly prisma: PrismaService) {
     super(prisma);
   }
+
+  async getAvailableTables(desiredTime: string, desiredDate: Date) {
+    const availableTables = await this.prisma.table.findMany({
+      where: {
+        reservations: {
+          none: {
+            reservationTime: desiredTime,
+            reservationDate: desiredDate,
+          },
+        },
+      },
+    });
+    return availableTables;
+  }
 }
