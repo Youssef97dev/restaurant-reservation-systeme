@@ -17,8 +17,8 @@ export class TableController extends TableControllerBase {
 
   @common.Get("available-tables")
   async getAvailableTables(
-    @common.Query("time") desiredTime: string,
-    @common.Query("date") desiredDate: string // Expecting the date as a string from the query
+    @common.Query("time_r") desiredTime: string,
+    @common.Query("date_r") desiredDate: string // Expecting the date as a string from the query
   ) {
     // Convert desiredDate to Date object if it's passed as a string
     const parsedDate = new Date(desiredDate);

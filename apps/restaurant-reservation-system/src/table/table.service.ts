@@ -29,7 +29,7 @@ export class TableService extends TableServiceBase {
   }
 
   // Run cron job every 30 minutes
-  @Cron(CronExpression.EVERY_30_MINUTES)
+  @Cron(CronExpression.EVERY_30_SECONDS)
   async checkReservations() {
     const currentDate = new Date();
 
