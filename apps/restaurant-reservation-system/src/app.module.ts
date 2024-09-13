@@ -10,11 +10,8 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { ServeStaticOptionsService } from "./serveStaticOptions.service";
 import { ConfigModule } from "@nestjs/config";
 
-import { ScheduleModule } from "@nestjs/schedule";
-
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
-import { TableService } from "./table/table.service";
 
 @Module({
   controllers: [],
@@ -29,11 +26,10 @@ import { TableService } from "./table/table.service";
     PrismaModule,
     SecretsManagerModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    ScheduleModule.forRoot(),
     ServeStaticModule.forRootAsync({
       useClass: ServeStaticOptionsService,
     }),
   ],
-  providers: [TableService],
+  providers: [],
 })
 export class AppModule {}

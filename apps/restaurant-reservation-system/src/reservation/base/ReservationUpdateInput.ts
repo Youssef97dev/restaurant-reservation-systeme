@@ -17,14 +17,15 @@ import {
   Max,
   IsOptional,
   ValidateNested,
+  IsEnum,
   IsString,
   MaxLength,
   IsDate,
-  IsEnum,
 } from "class-validator";
 
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
 import { Type } from "class-transformer";
+import { EnumReservationFloor } from "./EnumReservationFloor";
 import { EnumReservationStatus } from "./EnumReservationStatus";
 import { TableWhereUniqueInput } from "../../table/base/TableWhereUniqueInput";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
@@ -54,6 +55,17 @@ class ReservationUpdateInput {
     nullable: true,
   })
   customer?: CustomerWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumReservationFloor,
+  })
+  @IsEnum(EnumReservationFloor)
+  @IsOptional()
+  @Field(() => EnumReservationFloor, {
+    nullable: true,
+  })
+  floor?: "Terasse" | "Rdc" | "under" | null;
 
   @ApiProperty({
     required: false,
@@ -99,7 +111,7 @@ class ReservationUpdateInput {
   @Field(() => EnumReservationStatus, {
     nullable: true,
   })
-  status?: "Confirmed" | "Booked" | "Cancelled" | "Pending";
+  status?: "Confirmed" | "Booked" | "Cancelled" | "Completed";
 
   @ApiProperty({
     required: false,

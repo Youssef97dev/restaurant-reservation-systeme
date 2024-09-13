@@ -18,13 +18,14 @@ import {
   IsDate,
   ValidateNested,
   IsOptional,
+  IsEnum,
   IsString,
   MaxLength,
-  IsEnum,
 } from "class-validator";
 
 import { Type } from "class-transformer";
 import { Customer } from "../../customer/base/Customer";
+import { EnumReservationFloor } from "./EnumReservationFloor";
 import { EnumReservationStatus } from "./EnumReservationStatus";
 import { Table } from "../../table/base/Table";
 import { User } from "../../user/base/User";
@@ -56,6 +57,17 @@ class Reservation {
   @Type(() => Customer)
   @IsOptional()
   customer?: Customer | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumReservationFloor,
+  })
+  @IsEnum(EnumReservationFloor)
+  @IsOptional()
+  @Field(() => EnumReservationFloor, {
+    nullable: true,
+  })
+  floor?: "Terasse" | "Rdc" | "under" | null;
 
   @ApiProperty({
     required: true,
@@ -102,7 +114,7 @@ class Reservation {
   @Field(() => EnumReservationStatus, {
     nullable: true,
   })
-  status?: "Confirmed" | "Booked" | "Cancelled" | "Pending";
+  status?: "Confirmed" | "Booked" | "Cancelled" | "Completed";
 
   @ApiProperty({
     required: false,
