@@ -17,7 +17,7 @@ async function main() {
 
   // Add specific CORS options
   app.enableCors({
-    origin: ["https://le-palace-ui.vercel.app"], // The URL of your frontend
+    origin: ["https://le-palace-ui.vercel.app", "http://localhost:3001"], // The URL of your frontend
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // if you are using cookies

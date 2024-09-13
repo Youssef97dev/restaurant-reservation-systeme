@@ -44,4 +44,29 @@ export class ReservationController extends ReservationControllerBase {
     );
     return reservations;
   }
+
+  //@common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("by-month")
+  //@swagger.ApiOkResponse({ type: [Reservation] })
+  //@ApiNestedQuery(ReservationFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Reservation",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async reservationsByMonth(
+    @common.Query("year") year_: string
+  ): Promise<any[]> {
+    const year = parseInt(year_);
+    if (isNaN(year)) {
+      throw new Error("Invalid year format"); // Ensure the year is a valid number
+    }
+
+    const reservations = await this.service.getReservationsByMonth(year);
+
+    return reservations;
+  }
 }
