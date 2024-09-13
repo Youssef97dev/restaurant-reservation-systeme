@@ -13,15 +13,7 @@ import {
 const { PORT = 3000 } = process.env;
 
 async function main() {
-  const app = await NestFactory.create(AppModule);
-
-  // Add specific CORS options
-  app.enableCors({
-    origin: ["https://le-palace-ui.vercel.app", "http://localhost:3001"], // The URL of your frontend
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // if you are using cookies
-  });
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   app.setGlobalPrefix("api");
   app.useGlobalPipes(

@@ -14,19 +14,4 @@ export class TableController extends TableControllerBase {
   ) {
     super(service, rolesBuilder);
   }
-
-  @common.Get("available-tables")
-  async getAvailableTables(
-    @common.Query("time_r") desiredTime: string,
-    @common.Query("date_r") desiredDate: string // Expecting the date as a string from the query
-  ) {
-    // Convert desiredDate to Date object if it's passed as a string
-    const parsedDate = new Date(desiredDate);
-
-    const availableTables = await this.service.getAvailableTables(
-      desiredTime,
-      parsedDate
-    );
-    return availableTables;
-  }
 }

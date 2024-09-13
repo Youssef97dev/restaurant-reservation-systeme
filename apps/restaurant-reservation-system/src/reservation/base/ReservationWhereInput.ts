@@ -15,6 +15,7 @@ import { IntFilter } from "../../util/IntFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
+import { EnumReservationFloor } from "./EnumReservationFloor";
 import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { DateTimeFilter } from "../../util/DateTimeFilter";
@@ -46,6 +47,17 @@ class ReservationWhereInput {
     nullable: true,
   })
   customer?: CustomerWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumReservationFloor,
+  })
+  @IsEnum(EnumReservationFloor)
+  @IsOptional()
+  @Field(() => EnumReservationFloor, {
+    nullable: true,
+  })
+  floor?: "Terasse" | "Rdc" | "under";
 
   @ApiProperty({
     required: false,
@@ -100,7 +112,7 @@ class ReservationWhereInput {
   @Field(() => EnumReservationStatus, {
     nullable: true,
   })
-  status?: "Confirmed" | "Booked" | "Cancelled" | "Pending";
+  status?: "Confirmed" | "Booked" | "Cancelled" | "Completed";
 
   @ApiProperty({
     required: false,

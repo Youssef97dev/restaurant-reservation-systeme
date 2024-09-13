@@ -37,13 +37,16 @@ export class UserControllerBase {
     protected readonly service: UserService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  //@common.UseInterceptors(AclValidateRequestInterceptor)
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "create",
     possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
   })
   async createUser(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.createUser({
@@ -230,6 +233,7 @@ export class UserControllerBase {
           },
         },
 
+        floor: true,
         id: true,
         note: true,
         reservationDate: true,

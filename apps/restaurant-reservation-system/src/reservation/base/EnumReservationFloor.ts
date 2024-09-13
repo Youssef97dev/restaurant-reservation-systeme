@@ -11,13 +11,12 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { registerEnumType } from "@nestjs/graphql";
 
-export enum EnumReservationStatus {
-  Confirmed = "Confirmed",
-  Booked = "Booked",
-  Cancelled = "Cancelled",
-  Completed = "Completed",
+export enum EnumReservationFloor {
+  Terasse = "Terasse",
+  Rdc = "Rdc",
+  1 = "under",
 }
 
-registerEnumType(EnumReservationStatus, {
-  name: "EnumReservationStatus",
+registerEnumType(EnumReservationFloor, {
+  name: "EnumReservationFloor",
 });
