@@ -14,7 +14,7 @@ export class TableService extends TableServiceBase {
     super(prisma);
   }
 
-  async getAvailableTables(desiredTime: string, desiredDate: Date) {
+  /*async getAvailableTables(desiredTime: string, desiredDate: Date) {
     const availableTables = await this.prisma.table.findMany({
       where: {
         reservations: {
@@ -26,10 +26,10 @@ export class TableService extends TableServiceBase {
       },
     });
     return availableTables;
-  }
+  }*/
 
   // Run cron job every 30 minutes
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  /*@Cron(CronExpression.EVERY_30_SECONDS)
   async checkReservations() {
     const currentDate = new Date();
 
@@ -75,5 +75,5 @@ export class TableService extends TableServiceBase {
         });
       }
     }
-  }
+  }*/
 }

@@ -47,6 +47,7 @@ model Reservation {
   createdAt       DateTime              @default(now())
   customer        Customer?             @relation(fields: [customerId], references: [id])
   customerId      String?
+  floor           EnumReservationFloor?
   id              String                @id @default(cuid())
   note            String?
   reservationDate DateTime
@@ -65,9 +66,15 @@ enum EnumTableStatus {
   Occupied
 }
 
+enum EnumReservationFloor {
+  Terasse
+  Rdc
+  SousSol
+}
+
 enum EnumReservationStatus {
   Confirmed
   Booked
   Cancelled
-  Pending
+  Completed
 }

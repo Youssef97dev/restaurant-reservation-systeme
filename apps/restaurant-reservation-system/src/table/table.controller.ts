@@ -15,7 +15,7 @@ export class TableController extends TableControllerBase {
     super(service, rolesBuilder);
   }
 
-  @common.Get("available-tables")
+  /*@common.Get("available-tables")
   async getAvailableTables(
     @common.Query("time_r") desiredTime: string,
     @common.Query("date_r") desiredDate: string // Expecting the date as a string from the query
@@ -28,5 +28,5 @@ export class TableController extends TableControllerBase {
       parsedDate
     );
     return availableTables;
-  }
+  }*/
 }

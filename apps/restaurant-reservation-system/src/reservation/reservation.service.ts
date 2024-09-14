@@ -3,7 +3,8 @@ import { PrismaService } from "../prisma/prisma.service";
 import { ReservationServiceBase } from "./base/reservation.service.base";
 
 import { Prisma, Reservation as PrismaReservation } from "@prisma/client";
-import { endOfDay, startOfDay, addHours } from "date-fns";
+import { endOfDay, startOfDay, addHours, isBefore } from "date-fns";
+import { CronExpression, Cron } from "@nestjs/schedule";
 
 @Injectable()
 export class ReservationService extends ReservationServiceBase {
@@ -60,5 +61,52 @@ export class ReservationService extends ReservationServiceBase {
       reservationsByMonth[month] += reservation._count.id; // Add reservation count to the respective month
     });
     return reservationsByMonth;
+  }
+
+  // Run cron job every 30 minutes
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  async checkReservations() {
+    const currentDate = new Date();
+
+    // Get reservations for today
+    const reservations = await this.findReservationsForToday(currentDate);
+    for (const reservation of reservations) {
+      const reservationTime = new Date(reservation.reservationDate);
+      const [time, modifier] = reservation.reservationTime.split(" "); // ['19:30', 'PM']
+      const [hoursStr, minutesStr] = time.split(":"); // ['19', '30']
+      reservationTime.setUTCHours(parseInt(hoursStr), parseInt(minutesStr));
+
+      //new Date(currentDate.setHours(currentDate.getHours() + 1)
+      // Change table status to 'Occupied' if the reservation time is within the next 30 minutes
+      /*if (
+        isBefore(reservationTime, addHours(currentDate, 1)) &&
+        isBefore(addHours(currentDate, 1), addHours(reservationTime, 2)) &&
+        reservation.status !== "Completed" && reservation.status !== "Cancelled"
+      ) {
+        await this.prisma.reservation.update({
+          data: {
+            status: "Completed",
+          },
+          where: {
+            id: reservation.id,
+          },
+        });
+      }*/
+      // After 2 hours, revert table status to 'Available'
+      if (
+        isBefore(addHours(reservationTime, 2), addHours(currentDate, 1)) &&
+        reservation.status !== "Completed" &&
+        reservation.status !== "Cancelled"
+      ) {
+        await this.prisma.reservation.update({
+          data: {
+            status: "Completed",
+          },
+          where: {
+            id: reservation.id,
+          },
+        });
+      }
+    }
   }
 }

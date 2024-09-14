@@ -80,6 +80,7 @@ export class ReservationControllerBase {
           },
         },
 
+        floor: true,
         id: true,
         note: true,
         reservationDate: true,
@@ -131,6 +132,7 @@ export class ReservationControllerBase {
           },
         },
 
+        floor: true,
         id: true,
         note: true,
         reservationDate: true,
@@ -184,6 +186,7 @@ export class ReservationControllerBase {
           },
         },
 
+        floor: true,
         id: true,
         note: true,
         reservationDate: true,
@@ -263,6 +266,7 @@ export class ReservationControllerBase {
             },
           },
 
+          floor: true,
           id: true,
           note: true,
           reservationDate: true,
@@ -321,6 +325,7 @@ export class ReservationControllerBase {
             },
           },
 
+          floor: true,
           id: true,
           note: true,
           reservationDate: true,

@@ -235,6 +235,7 @@ export class CustomerControllerBase {
           },
         },
 
+        floor: true,
         id: true,
         note: true,
         reservationDate: true,

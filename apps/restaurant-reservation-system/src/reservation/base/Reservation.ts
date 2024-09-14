@@ -26,6 +26,7 @@ import {
 import { Type } from "class-transformer";
 import { Customer } from "../../customer/base/Customer";
 import { EnumReservationStatus } from "./EnumReservationStatus";
+import { EnumReservationFloor } from "./EnumReservationFloor";
 import { Table } from "../../table/base/Table";
 import { User } from "../../user/base/User";
 
@@ -56,6 +57,17 @@ class Reservation {
   @Type(() => Customer)
   @IsOptional()
   customer?: Customer | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumReservationFloor,
+  })
+  @IsEnum(EnumReservationFloor)
+  @IsOptional()
+  @Field(() => EnumReservationFloor, {
+    nullable: true,
+  })
+  floor?: "Terasse" | "Rdc" | "SousSol" | null;
 
   @ApiProperty({
     required: true,
@@ -102,7 +114,7 @@ class Reservation {
   @Field(() => EnumReservationStatus, {
     nullable: true,
   })
-  status?: "Confirmed" | "Booked" | "Cancelled" | "Pending";
+  status?: "Confirmed" | "Booked" | "Cancelled" | "Completed";
 
   @ApiProperty({
     required: false,
